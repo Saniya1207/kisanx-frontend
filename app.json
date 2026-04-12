@@ -1,13 +1,16 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "KisanX",
+    "slug": "KisanX",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "frontend",
+    "icon": "./assets/images/logo.png",
+    "scheme": "KisanX",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
+    "experiments": {
+    "newArchEnabled": false
+    },
     "ios": {
       "supportsTablet": true
     },
@@ -38,7 +41,10 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-build-properties",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

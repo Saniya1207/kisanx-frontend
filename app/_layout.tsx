@@ -1,24 +1,34 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { Stack } from "expo-router";
+import { CartProvider } from "../context/CartContext";
+import { WishlistProvider } from "../context/WishlistContext";
+import * as Notifications from "expo-notifications";
+import * as Device from 'expo-device';
+import Constants from 'expo-constants';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+// ✨ Notification handler set karne ka sahi tareeka
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowBanner: true,  
+    shouldShowList: true,     
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <WishlistProvider>
+      {/* Provider must be outside the Stack to share data across all nested routes */}
+      <CartProvider>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="auth/login" />
+          <Stack.Screen name="auth/register" />
+          <Stack.Screen name="customer/(tabs)" />
+          <Stack.Screen name="customer/checkout" />
+          <Stack.Screen name="product/[id]" />
+        </Stack>
+      </CartProvider>
+    </WishlistProvider>
   );
 }
